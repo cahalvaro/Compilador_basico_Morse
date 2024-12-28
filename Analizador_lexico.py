@@ -16,12 +16,12 @@ class Lexer:
     def _compilar_patron(self):
         # Lista de patrones para los tokens
         TOKENS = [
-            ("NUMERO", r"\b(-----\s|.----\s|..---\s|...--\s|....-\s|.....\s|-....\s|--...\s|---..\s|----.\s)+\b"),       #Digitos
-            ("OPERADOR", r".-.-.\s|-....-\s|-.-.-\s|-..-.\s"), #Operadores aritmeticos  
-            ("COMPARATOR", r"\b(..-.-\s|.-.-.\s|-...-\s-...-\s)\b"),  # Comparadores
+            ("NUMERO", r"((-----|\.----|\.\.---|\.\.\.--|\.\.\.\.-|\.\.\.\.\.|-\.\.\.\.|--\.\.\.|---\.\.|----\.)\s)+"), #Digitos
+            ("OPERADOR", r"(\.-\.-\.|-\.\.\.\.-|-\.\.-|-\.\.-\.)\s"), #Operadores aritmeticos  
+            ("COMPARADOR", r"(\.\.-\.-|\.-\.-\.|-\.\.\.-\s-\.\.\.-)\s"),  # Comparadores
             ("WHITESPACE", r"\s+"),                          # Espacios en blanco (ignorados)
-            ("DELIM", r"\b(-.--.\s|-.--.-\s)\b"),            # Delimitadores
-            ("ASIGNACION", r"\b(_..._\s)\b"),                 #igual
+            ("DELIMITADOR", r"(-\.--\.|-\.--\.-)\s"),        # Delimitadores
+            ("ASIGNACION", r"(_\.\.\._)\s"),                 #igual
         ]
         # Combina las reglas en un único patrón
         patrones = [f"(?P<{nombre}>{regex})" for nombre, regex in TOKENS]
@@ -58,9 +58,9 @@ class Lexer:
 
 if __name__ == "__main__":
     codigo = """
-    .---- ..---  .-.-.  .---- ----- -----
+    -.--. -.--. .---- ..--- ..... .-.-. ..... ---.. --... -.--.- -..- .---- ..... -.--.- -..-. .....
     """
-
+    #((125+587)*15)/5
     lexer = Lexer(codigo)
     tabla_simbolos = lexer.analizar()
 
