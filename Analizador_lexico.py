@@ -2,8 +2,8 @@ import re
 
 class Simbolo:
     def __init__(self, lexema, token):
-        self.lexema = lexema  # El valor del símbolo (e.g., "if", "10")
-        self.token = token    # El tipo del símbolo (e.g., "KEYWORD", "NUMBER")
+        self.lexema = lexema 
+        self.token = token
 
     def __repr__(self):
         return "Simbolo"f'("{self.lexema}", "{self.token}")'
@@ -11,10 +11,10 @@ class Simbolo:
 class Lexer:
     def __init__(self, codigo):
         self.codigo = codigo
-        self.patron = self._compilar_patron()  # Compila todas las reglas en una sola expresión regular
+        self.patron = self._compilar_patron() 
 
     def _compilar_patron(self):
-        # Lista de patrones para los tokens
+        # Expresiones regulares
         TOKENS = [
             ("NUMERO", r"((-----|\.----|\.\.---|\.\.\.--|\.\.\.\.-|\.\.\.\.\.|-\.\.\.\.|--\.\.\.|---\.\.|----\.)\s)+"), #Digitos
             ("OPERADOR", r"(\.-\.-\.|-\.\.\.\.-|-\.\.-|-\.\.-\.)\s"), #Operadores aritmeticos  
@@ -35,13 +35,13 @@ class Lexer:
         while posicion_actual < len(self.codigo):
             match = self.patron.match(self.codigo, posicion_actual)
             if match:
-                tipo = match.lastgroup  # Obtiene el nombre del grupo coincidente
+                tipo = match.lastgroup  
                 valor = match.group(tipo)
                 if tipo == "WHITESPACE" or tipo == "COMMENT":
                     # Actualiza la línea si hay saltos de línea en espacios o comentarios
                     linea_actual += valor.count('\n')
                     posicion_actual = match.end()
-                    continue  # Ignora espacios y comentarios
+                    continue  # Ignora espacios
 
                 # Agrega el token como un símbolo a la tabla
                 tabla_simbolos.append(Simbolo(valor, tipo))
@@ -49,16 +49,16 @@ class Lexer:
             else:
                 # Error: el código no coincide con ningún patrón
                 fin_linea = self.codigo.find('\n', posicion_actual)
-                if fin_linea == -1:  # No hay más saltos de línea
+                if fin_linea == -1:
                     fin_linea = len(self.codigo)
                 codigo_erroneo = self.codigo[posicion_actual:fin_linea]
                 print(f"Error en la línea {linea_actual}: '{codigo_erroneo.strip()}'")
-                break  # Detiene el análisis ante un error
+                break 
         return tabla_simbolos
 
 if __name__ == "__main__":
     codigo = """
-    -.--. -.--. .---- ..--- ..... .-.-. ..... ---.. --... -.--.- -..- .---- ..... -.--.- -..-. .....
+    -.... ..-.- ----.
     """
     #((125+587)*15)/5
     lexer = Lexer(codigo)
