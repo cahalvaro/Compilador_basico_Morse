@@ -87,7 +87,6 @@ if __name__ == "__main__":
         Simbolo("-....- ", "OPERADOR"),
         Simbolo("..---", "NUMERO")
     ]
-
     print("Analizando tabla de símbolos:")
     resultado = verificar_expresion(tabla_simbolos)
     if resultado:

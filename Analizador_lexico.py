@@ -18,7 +18,7 @@ class Lexer:
         TOKENS = [
             ("NUMERO", r"((-----|\.----|\.\.---|\.\.\.--|\.\.\.\.-|\.\.\.\.\.|-\.\.\.\.|--\.\.\.|---\.\.|----\.)\s)+"), #Digitos
             ("OPERADOR", r"(\.-\.-\.|-\.\.\.\.-|-\.\.-|-\.\.-\.)\s"), #Operadores aritmeticos  
-            ("COMPARADOR", r"(\.\.-\.-|\.-\.-\.|-\.\.\.-\s-\.\.\.-)\s"),  # Comparadores
+            ("COMPARADOR", r"(\.\.-\.-|-\.-\.-|-\.\.\.-\s-\.\.\.-)\s"),  # Comparadores
             ("WHITESPACE", r"\s+"),                          # Espacios en blanco (ignorados)
             ("DELIMITADOR", r"(-\.--\.|-\.--\.-)\s"),        # Delimitadores
             ("ASIGNACION", r"(_\.\.\._)\s"),                 #igual
@@ -58,7 +58,7 @@ class Lexer:
 
 if __name__ == "__main__":
     codigo = """
-    -.... ..-.- ----.
+    ----. -.-.- ...--
     """
     #((125+587)*15)/5
     lexer = Lexer(codigo)
